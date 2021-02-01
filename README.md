@@ -1,3 +1,5 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/2dc66f0d01fb9bb2a8eb/maintainability)](https://codeclimate.com/github/rise-erpelding/apprenticeship-gilded-rose/maintainability)  [![Test Coverage](https://api.codeclimate.com/v1/badges/2dc66f0d01fb9bb2a8eb/test_coverage)](https://codeclimate.com/github/rise-erpelding/apprenticeship-gilded-rose/test_coverage)
+
 If you want to get cracking on the JavaScript source then do this:
 
     git clone git@github.com:guyroyse/gilded-rose-javascript.git
