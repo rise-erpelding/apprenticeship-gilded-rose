@@ -1,50 +1,5 @@
 import { Item, updateQuality } from './gilded_rose';
 
-// describe.skip('`updateQuality`', () => {
-//   it("Updates the Quality", () => {
-//     const standardItem = new Item('Haunted Shoe', 10, 10);
-//     updateQuality([standardItem]);
-//     expect(standardItem.quality).toBe(9);
-//   });
-
-//   it.todo('This is a good place for a good test!');
-// });
-
-
-describe('updating of general items', () => {
-  const generalItem = new Item('Haunted Shoe', 10, 10);
-  // console.log(generalItem);
-
-  afterEach(() => {
-    // updates the quality and sell_in back to original quantities
-    generalItem.sell_in = 10;
-    generalItem.quality = 10;
-    // console.log(generalItem);
-  });
-
-  it('decrements the sell_in by 1', () => {
-    updateQuality([generalItem]);
-    expect(generalItem.sell_in).toBe(9);
-  });
-
-  it('decrements the quality by 1', () => {
-    updateQuality([generalItem]);
-    expect(generalItem.quality).toBe(9);
-  });
-
-  it('does not decrease the quality to a negative number', () => {
-    generalItem.quality = 0;
-    updateQuality([generalItem]);
-    expect(generalItem.quality).toBe(0);
-  });
-
-  it('decreases quality twice as fast if the sell_in is less than 0', () => {
-    generalItem.sell_in = -1;
-    updateQuality([generalItem]);
-    expect(generalItem.quality).toBe(8);
-  });
-});
-
 describe('updating of aged brie', () => {
   const agedBrie = new Item('Aged Brie', 2, 0);
 
@@ -54,20 +9,26 @@ describe('updating of aged brie', () => {
     agedBrie.quality = 0;
   });
 
-  it('increments in quality by 1', () => {
+  it('increases the quality of the item by 1', () => {
     updateQuality([agedBrie]);
     expect(agedBrie.quality).toBe(1);
   });
 
-  it('decrements the sell_in by 1', () => {
-    updateQuality([agedBrie]);
-    expect(agedBrie.sell_in).toBe(1);
-  });
+  // it('decreases the sell_in of the item by 1', () => {
+  //   updateQuality([agedBrie]);
+  //   expect(agedBrie.sell_in).toBe(1);
+  // });
 
-  it('does not increase the quality to more than 50', () => {
+  it('does not increase the quality of the item to more than 50', () => {
     agedBrie.quality = 50;
     updateQuality([agedBrie]);
     expect(agedBrie.quality).toBe(50);
+  });
+
+  it('increases in quality of the item by 2 if sell_in is less than 0', () => {
+    agedBrie.sell_in = -1;
+    updateQuality([agedBrie]);
+    expect(agedBrie.quality).toBe(2);
   });
 
 });
@@ -88,41 +49,79 @@ describe('updating of sulfuras', () => {
 });
 
 describe('updating of backstage passes', () => {
-  const backstagePasses = new Item('Backstage passes to an NSYNC concert', 15, 20);
+  let backstagePasses = new Item('Backstage passes to a TAFKAL80ETC concert', 5, 10);
 
   afterEach(() => {
     // updates the quality and sell_in back to original quantities
-    backstagePasses.sell_in = 15;
-    backstagePasses.quality = 20;
+    backstagePasses.sell_in = 5;
+    backstagePasses.quality = 10;
   });
 
-  it('decrements the sell_in by 1', () => {
+  it('decreases the sell_in of the item by 1', () => {
     updateQuality([backstagePasses]);
-    expect(backstagePasses.sell_in).toBe(14);
+    expect(backstagePasses.sell_in).toBe(4);
   });
 
-  it('has a quality of 0 is the sell_in is less than 0', () => {
-    backstagePasses.sell_in = -1;
+  it('decreases the quality of the item to 0 if the sell_in is 0', () => {
+    backstagePasses.sell_in = 0;
     updateQuality([backstagePasses]);
     expect(backstagePasses.quality).toBe(0);
   });
 
-  it('increases in quality by 3 if the sell_in is less than 6', () => {
+  it('increases the quality of the item by 3 if the sell_in is 5 or less', () => {
     backstagePasses.sell_in = 4;
+    updateQuality([backstagePasses]);
+    expect(backstagePasses.quality).toBe(13);
+  });
+
+  it('increases the quality of the item by 2 if the sell_in is 10 or less', () => {
+    backstagePasses.sell_in = 8;
+    updateQuality([backstagePasses]);
+    expect(backstagePasses.quality).toBe(12);
+  });
+
+  it('increases the quality of the item by 1 if the sell_in is more than 10', () => {
+    backstagePasses.sell_in = 11;
+    updateQuality([backstagePasses]);
+    expect(backstagePasses.quality).toBe(11);
+  });
+
+  it('increases the quality of the item by 1 if the sell_in is more than 10', () => {
+    backstagePasses.quality = 20;
     updateQuality([backstagePasses]);
     expect(backstagePasses.quality).toBe(23);
   });
+});
 
-  it('increases in quality by 2 if the sell_in is less than 11', () => {
-    backstagePasses.sell_in = 8;
-    updateQuality([backstagePasses]);
-    expect(backstagePasses.quality).toBe(22);
+describe('updating of general items', () => {
+  const generalItem = new Item('Haunted Shoe', 10, 10);
+
+  afterEach(() => {
+    // updates the quality and sell_in back to original quantities
+    generalItem.sell_in = 10;
+    generalItem.quality = 10;
+    // console.log(generalItem);
   });
 
-  it('increases in quality by 1 if the sell_in is more than 10', () => {
-    backstagePasses.sell_in = 11;
-    updateQuality([backstagePasses]);
-    expect(backstagePasses.quality).toBe(21);
+  it('decreases the sell_in of the item by 1', () => {
+    updateQuality([generalItem]);
+    expect(generalItem.sell_in).toBe(9);
   });
 
+  it('decreases the quality of the item by 1', () => {
+    updateQuality([generalItem]);
+    expect(generalItem.quality).toBe(9);
+  });
+
+  it('does not decrease the quality of the item to a negative number', () => {
+    generalItem.quality = 0;
+    updateQuality([generalItem]);
+    expect(generalItem.quality).toBe(0);
+  });
+
+  it('decreases the quality of the item by 2 if the sell_in is less than 0', () => {
+    generalItem.sell_in = -1;
+    updateQuality([generalItem]);
+    expect(generalItem.quality).toBe(8);
+  });
 });
