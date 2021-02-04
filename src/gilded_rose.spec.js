@@ -1,25 +1,13 @@
 import { Item, updateQuality } from './gilded_rose';
 
-// describe.skip('`updateQuality`', () => {
-//   it("Updates the Quality", () => {
-//     const standardItem = new Item('Haunted Shoe', 10, 10);
-//     updateQuality([standardItem]);
-//     expect(standardItem.quality).toBe(9);
-//   });
-
-//   it.todo('This is a good place for a good test!');
-// });
-
 
 describe('updating of general items', () => {
   const generalItem = new Item('Haunted Shoe', 10, 10);
-  // console.log(generalItem);
 
   afterEach(() => {
     // updates the quality and sell_in back to original quantities
     generalItem.sell_in = 10;
     generalItem.quality = 10;
-    // console.log(generalItem);
   });
 
   it('decrements the sell_in by 1', () => {
@@ -93,8 +81,29 @@ describe('updating of sulfuras', () => {
 
 });
 
+describe.skip('updating of conjured items', () => {
+  const conjuredItem = new Item('Conjured Mana Cake', 3, 6);
+
+  afterEach(() => {
+    // updates the quality and sell_in back to original quantities
+    conjuredItem.sell_in = 3;
+    conjuredItem.quality = 6;
+  });
+
+  it('decrements the sell_in by 1', () => {
+    updateQuality([conjuredItem]);
+    expect(conjuredItem.sell_in).toBe(2);
+  });
+
+  it('decreases the quality by 2', () => {
+    updateQuality([conjuredItem]);
+    expect(conjuredItem.quality).toBe(4);
+  });
+
+});
+
 describe('updating of backstage passes', () => {
-  let backstagePasses = new Item('Backstage passes to a TAFKAL80ETC concert', 5, 10);
+  const backstagePasses = new Item('Backstage passes to a TAFKAL80ETC concert', 5, 10);
 
   afterEach(() => {
     // updates the quality and sell_in back to original quantities
