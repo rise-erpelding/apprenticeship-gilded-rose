@@ -48,6 +48,28 @@ describe('updating of sulfuras', () => {
 
 });
 
+describe('updating of conjured items', () => {
+  const conjuredItem = new Item('Conjured Mana Cake', 3, 6);
+
+  afterEach(() => {
+    // updates the quality and sell_in back to original quantities
+    conjuredItem.sell_in = 3;
+    conjuredItem.quality = 6;
+  });
+
+  it('decreases the quality of the item by 2', () => {
+    updateQuality([conjuredItem]);
+    expect(conjuredItem.quality).toBe(4);
+  });
+
+  it('does not decrease the quality of the item to a negative number', () => {
+    conjuredItem.quality = 0;
+    updateQuality([conjuredItem]);
+    expect(conjuredItem.quality).toBe(0);
+  });
+
+});
+
 describe('updating of backstage passes', () => {
   let backstagePasses = new Item('Backstage passes to a TAFKAL80ETC concert', 5, 10);
 

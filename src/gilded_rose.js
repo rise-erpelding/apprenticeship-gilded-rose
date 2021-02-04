@@ -23,6 +23,16 @@ updateQuality(items);
 */
 export function updateQuality(items) {
   for (var i = 0; i < items.length; i++) {
+      if (items[i].name.startsWith('Conjured')) {
+        if (items[i].quality > 2) {
+          items[i].quality = items[i].quality - 2;
+        }
+        else {
+          items[i].quality = 0;
+        }
+        items[i].sell_in = items[i].sell_in - 1;
+        break;
+      }
     if (items[i].name != 'Aged Brie' && items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
       if (items[i].quality > 0) {
         if (items[i].name != 'Sulfuras, Hand of Ragnaros') {
@@ -69,17 +79,17 @@ export function updateQuality(items) {
   }
 }
 
-const items = [
-  // new Item('+5 Dexterity Vest', 10, 20),
-  new Item('Haunted Shoe', -2, 10),
-  // new Item('Aged Brie', 2, 0),
-  // new Item('Elixir of the Mongoose', 5, 7),
-  // new Item('Sulfuras, Hand of Ragnaros', 0, 80),
-  // new Item('Backstage passes to a TAFKAL80ETC concert', -1, 32),
-  // new Item('Backstage passes to a TAFKAL80ETC concert', 10, 32),
-  // new Item('Conjured Mana Cake', 3, 6),
-];
+// const items = [
+//   // new Item('+5 Dexterity Vest', 10, 20),
+//   new Item('Haunted Shoe', -2, 10),
+//   // new Item('Aged Brie', 2, 0),
+//   // new Item('Elixir of the Mongoose', 5, 7),
+//   // new Item('Sulfuras, Hand of Ragnaros', 0, 80),
+//   // new Item('Backstage passes to a TAFKAL80ETC concert', -1, 32),
+//   // new Item('Backstage passes to a TAFKAL80ETC concert', 10, 32),
+//   // new Item('Conjured Mana Cake', 3, 6),
+// ];
 
-updateQuality(items);
+// updateQuality(items);
 
-console.log(items);
+// console.log(items);
