@@ -1,6 +1,5 @@
 import { Item, updateQuality } from './gilded_rose';
 
-
 describe('updating of general items', () => {
   const generalItem = new Item('Haunted Shoe', 10, 10);
 
@@ -62,8 +61,7 @@ describe('updating of aged brie', () => {
     agedBrie.sell_in = -1;
     updateQuality([agedBrie]);
     expect(agedBrie.quality).toBe(2);
-  })
-
+  });
 });
 
 describe('updating of sulfuras', () => {
@@ -78,7 +76,6 @@ describe('updating of sulfuras', () => {
     updateQuality([sulfuras]);
     expect(sulfuras.quality).toBe(80);
   });
-
 });
 
 describe.skip('updating of conjured items', () => {
@@ -99,7 +96,6 @@ describe.skip('updating of conjured items', () => {
     updateQuality([conjuredItem]);
     expect(conjuredItem.quality).toBe(4);
   });
-
 });
 
 describe('updating of backstage passes', () => {
@@ -139,5 +135,4 @@ describe('updating of backstage passes', () => {
     updateQuality([backstagePasses]);
     expect(backstagePasses.quality).toBe(11);
   });
-
 });

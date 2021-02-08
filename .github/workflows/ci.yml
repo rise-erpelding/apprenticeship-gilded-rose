@@ -28,3 +28,15 @@ jobs:
 
     - name: Lint
       run:  npm run lint
+
+    - name: Report code coverage
+      uses: paambaati/codeclimate-action@v2.7.5
+      env:
+        CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_REPORTER_ID }}
+      with:
+        coverageCommand: npm run test:coverage
+<<<<<<< HEAD
+        debug: true
+=======
+        debug: true
+>>>>>>> 1a88759 (Chore: Add code climate coverage)
