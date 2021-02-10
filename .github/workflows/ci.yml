@@ -35,8 +35,4 @@ jobs:
         CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_REPORTER_ID }}
       with:
         coverageCommand: npm run test:coverage
-<<<<<<< HEAD
         debug: true
-=======
-        debug: true
->>>>>>> 1a88759 (Chore: Add code climate coverage)
