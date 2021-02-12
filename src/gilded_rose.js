@@ -21,7 +21,16 @@ const items = [
 
 updateQuality(items);
 */
-export function updateQuality(items) {
+
+// function updateQuality(items) {
+
+// }
+
+// function updateSellIn(items) {
+
+// }
+
+export function update(items) {
   for (var i = 0; i < items.length; i++) {
     // handles decrease in quality for regular items (as long as quality > 0)
     if (items[i].name != 'Aged Brie' && items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
