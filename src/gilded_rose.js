@@ -46,6 +46,9 @@ export function update(items) {
     }
     if (items[i].name === 'Aged Brie' && items[i].quality < 50) {
       items[i].quality = incrementQuality(items[i].quality);
+      if (items[i].sell_in < 0) {
+        items[i].quality = incrementQuality(items[i].quality);
+      }
     }
     if (items[i].name === 'Backstage passes to a TAFKAL80ETC concert' && items[i].quality < 50) {
       items[i].quality = incrementQuality(items[i].quality);
@@ -75,11 +78,6 @@ export function update(items) {
         } else {
           // sets quality to 0 for backstage passes
           items[i].quality = setQualityToZero();
-        }
-      } else {
-        // handles increase for aged brie but only if quality is < 50
-        if (items[i].quality < 50) {
-          items[i].quality = incrementQuality(items[i].quality);
         }
       }
     }
