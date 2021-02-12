@@ -40,6 +40,7 @@ function decrementSellIn(itemSellIn) {
 
 export function update(items) {
   for (var i = 0; i < items.length; i++) {
+    // handles sulfuras only (by doing nothing)
     if (items[i].name === 'Sulfuras, Hand of Ragnaros') {
       break;
     }
@@ -66,7 +67,7 @@ export function update(items) {
         }
       }
     }
-      // handles decrease in sell in for all items except sulfuras
+      // handles decrease in sell in for items
       items[i].sell_in = decrementSellIn(items[i].sell_in);
     if (items[i].sell_in < 0) {
       // handles if sell_in is negative
