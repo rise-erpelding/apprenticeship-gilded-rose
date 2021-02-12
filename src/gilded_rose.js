@@ -44,6 +44,12 @@ export function update(items) {
     if (items[i].name === 'Sulfuras, Hand of Ragnaros') {
       break;
     }
+    if (items[i].name === 'Aged Brie' && items[i].quality < 50) {
+      items[i].quality = incrementQuality(items[i].quality);
+    }
+    if (items[i].name === 'Backstage passes to a TAFKAL80ETC concert' && items[i].quality < 50) {
+      items[i].quality = incrementQuality(items[i].quality);
+    }
     // handles decrease in quality for regular items (as long as quality > 0)
     if (items[i].name != 'Aged Brie' && items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
       if (items[i].quality > 0) {
@@ -51,8 +57,6 @@ export function update(items) {
       }
     } else {
       // handles increase in quality for Aged Brie and Backstage passes
-      if (items[i].quality < 50) {
-        items[i].quality = items[i].quality + 1
         if (items[i].name == 'Backstage passes to a TAFKAL80ETC concert') {
           if (items[i].sell_in < 11) {
             if (items[i].quality < 50) {
@@ -65,7 +69,6 @@ export function update(items) {
             }
           }
         }
-      }
     }
       // handles decrease in sell in for items
       items[i].sell_in = decrementSellIn(items[i].sell_in);
