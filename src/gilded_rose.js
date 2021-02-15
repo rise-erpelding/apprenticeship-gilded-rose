@@ -48,7 +48,7 @@ export function update(items) {
       break;
     }
 
-    // handles other special items
+    // handles other special items: Aged Brie, Backstage passes, eventually conjured items
     if (items[i].name === 'Aged Brie') {
       items[i].quality = incrementQuality(items[i].quality);
       if (items[i].sell_in < 0) {
@@ -63,28 +63,23 @@ export function update(items) {
       if (items[i].sell_in < 6) {
           items[i].quality = incrementQuality(items[i].quality);
       }
-    }
-
-    // handles decrease in quality for regular items (as long as quality > 0)
-    if (items[i].name != 'Aged Brie' && items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-      if (items[i].quality > 0) {
-          items[i].quality = decrementQuality(items[i].quality);
+      if (items[i].sell_in <= 0) {
+        items[i].quality = setQualityToZero();
       }
-    } 
+    }
+    // conjured items will go here eventually
+
+    // general items/standard items/normal items 
+    else {
+      if (items[i].quality > 0) {
+        items[i].quality = decrementQuality(items[i].quality);
+      }
+      if (items[i].sell_in < 0 && items[i].quality > 0) {
+        items[i].quality = decrementQuality(items[i].quality); 
+      }
+    }
       // handles decrease in sell in for items
       items[i].sell_in = decrementSellIn(items[i].sell_in);
-    if (items[i].sell_in < 0) {
-      // handles if sell_in is negative
-      if (items[i].name != 'Aged Brie') {
-        if (items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-          if (items[i].quality > 0) {
-              // handles additional decrease in quality after sell_in is 0
-              items[i].quality = decrementQuality(items[i].quality);          }
-        } else {
-          // sets quality to 0 for backstage passes
-          items[i].quality = setQualityToZero();
-        }
-      }
-    }
+
   }
 }
