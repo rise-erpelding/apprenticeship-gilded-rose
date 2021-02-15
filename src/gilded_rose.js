@@ -41,45 +41,53 @@ function decrementSellIn(itemSellIn) {
   return itemSellIn - 1;
 }
 
-export function update(items) {
-  for (var i = 0; i < items.length; i++) {
-    // handles sulfuras only (by doing nothing)
-    if (items[i].name === 'Sulfuras, Hand of Ragnaros') {
-      break;
-    }
-
+function updateQuality(item) {
     // handles other special items: Aged Brie, Backstage passes, eventually conjured items
-    if (items[i].name === 'Aged Brie') {
-      items[i].quality = incrementQuality(items[i].quality);
-      if (items[i].sell_in < 0) {
-        items[i].quality = incrementQuality(items[i].quality);
+    if (item.name === 'Aged Brie') {
+      item.quality = incrementQuality(item.quality);
+      if (item.sell_in < 0) {
+        item.quality = incrementQuality(item.quality);
       }
     }
-    else if (items[i].name === 'Backstage passes to a TAFKAL80ETC concert') {
-      items[i].quality = incrementQuality(items[i].quality);
-      if (items[i].sell_in < 11) {
-          items[i].quality = incrementQuality(items[i].quality);             
+    else if (item.name === 'Backstage passes to a TAFKAL80ETC concert') {
+      item.quality = incrementQuality(item.quality);
+      if (item.sell_in < 11) {
+        item.quality = incrementQuality(item.quality);
       }
-      if (items[i].sell_in < 6) {
-          items[i].quality = incrementQuality(items[i].quality);
+      if (item.sell_in < 6) {
+        item.quality = incrementQuality(item.quality);
       }
-      if (items[i].sell_in <= 0) {
-        items[i].quality = setQualityToZero();
+      if (item.sell_in <= 0) {
+        item.quality = setQualityToZero();
       }
     }
     // conjured items will go here eventually
 
     // general items/standard items/normal items 
     else {
-      if (items[i].quality > 0) {
-        items[i].quality = decrementQuality(items[i].quality);
+      if (item.quality > 0) {
+        item.quality = decrementQuality(item.quality);
       }
-      if (items[i].sell_in < 0 && items[i].quality > 0) {
-        items[i].quality = decrementQuality(items[i].quality); 
+      if (item.sell_in < 0 && item.quality > 0) {
+        item.quality = decrementQuality(item.quality);
       }
     }
-      // handles decrease in sell in for items
-      items[i].sell_in = decrementSellIn(items[i].sell_in);
+}
+
+export function update(items) {
+  for (var i = 0; i < items.length; i++) {
+    // handles sulfuras only (by doing nothing)
+    if (items[i].name === 'Sulfuras, Hand of Ragnaros') {
+      break;
+    }
+    
+    // handles update quality for all non-sulfuras items
+    else {
+      updateQuality(items[i]);
+    }
+
+    // handles decrease in sell in for all items
+    items[i].sell_in = decrementSellIn(items[i].sell_in);
 
   }
 }
