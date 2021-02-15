@@ -74,20 +74,24 @@ function updateQuality(item) {
     }
 }
 
+function updateSellIn(item) {
+  item.sell_in = decrementSellIn(item.sell_in);
+}
+
 export function update(items) {
   for (var i = 0; i < items.length; i++) {
     // handles sulfuras only (by doing nothing)
     if (items[i].name === 'Sulfuras, Hand of Ragnaros') {
       break;
     }
-    
-    // handles update quality for all non-sulfuras items
+
+
     else {
+      // handles update quality for all non-sulfuras items
       updateQuality(items[i]);
+
+      // handles decrease in sell in for all non-sulfuras items
+      updateSellIn(items[i]);
     }
-
-    // handles decrease in sell in for all items
-    items[i].sell_in = decrementSellIn(items[i].sell_in);
-
   }
 }
