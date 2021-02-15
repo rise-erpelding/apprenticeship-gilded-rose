@@ -43,16 +43,16 @@ function decrementSellIn(itemSellIn) {
 
 function updateQuality(item) {
     // handles other special items: Aged Brie, Backstage passes, eventually conjured items
-    if (item.name === 'Sulfuras, Hand of Ragnaros') {
+    if (item.name.toLowerCase().includes('sulfuras')) {
       return;
     }
-    else if (item.name === 'Aged Brie') {
+    if (item.name.toLowerCase().includes('aged brie')) {
       item.quality = incrementQuality(item.quality);
       if (item.sell_in < 0) {
         item.quality = incrementQuality(item.quality);
       }
     }
-    else if (item.name === 'Backstage passes to a TAFKAL80ETC concert') {
+    else if (item.name.toLowerCase().includes('backstage passes')) {
       item.quality = incrementQuality(item.quality);
       if (item.sell_in < 11) {
         item.quality = incrementQuality(item.quality);
@@ -78,7 +78,7 @@ function updateQuality(item) {
 }
 
 function updateSellIn(item) {
-  if (item.name === 'Sulfuras, Hand of Ragnaros') {
+  if (item.name.toLowerCase().includes('sulfuras')) {
     return;
   }
   else {
