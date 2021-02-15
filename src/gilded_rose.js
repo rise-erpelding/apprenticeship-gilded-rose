@@ -26,11 +26,11 @@ function decrementQuality(itemQuality) {
   return itemQuality - 1;
 }
 
-function incrementQuality(itemQuality) {
-  if (itemQuality >= 50) {
+function increaseQuality(currQuality, incAmount) {
+  if (currQuality >= 50) {
     return 50;
   }
-  return itemQuality + 1;
+  return currQuality + incAmount;
 }
 
 function setQualityToZero() {
@@ -52,9 +52,9 @@ function updateQuality(item) {
      * aged brie increases in quality the older it gets
      * it didn't explicitly say anywhere that aged brie increases in quality double after sell_in is 0, but this is the way it behaved in the original function
      */
-    item.quality = incrementQuality(item.quality);
+    item.quality = increaseQuality(item.quality, 1);
     if (item.sell_in < 0) {
-      item.quality = incrementQuality(item.quality);
+      item.quality = increaseQuality(item.quality, 1);
     }
   }
   else if (item.name.toLowerCase().includes('backstage passes')) {
@@ -64,12 +64,12 @@ function updateQuality(item) {
     * and by 3 when there are 5 days or less
     * but quality drops to 0 after the concert
     */
-    item.quality = incrementQuality(item.quality);
+    item.quality = increaseQuality(item.quality, 1);
     if (item.sell_in < 11) {
-      item.quality = incrementQuality(item.quality);
+      item.quality = increaseQuality(item.quality, 1);
     }
     if (item.sell_in < 6) {
-      item.quality = incrementQuality(item.quality);
+      item.quality = increaseQuality(item.quality, 1);
     }
     if (item.sell_in <= 0) {
       item.quality = setQualityToZero();
