@@ -79,19 +79,19 @@ function updateSellIn(item) {
 }
 
 export function update(items) {
-  for (var i = 0; i < items.length; i++) {
+  items.forEach(item => {
     // handles sulfuras only (by doing nothing)
-    if (items[i].name === 'Sulfuras, Hand of Ragnaros') {
-      break;
+    if (item.name === 'Sulfuras, Hand of Ragnaros') {
+      return;
     }
 
 
     else {
       // handles update quality for all non-sulfuras items
-      updateQuality(items[i]);
+      updateQuality(item);
 
       // handles decrease in sell in for all non-sulfuras items
-      updateSellIn(items[i]);
+      updateSellIn(item);
     }
-  }
+  })
 }
