@@ -22,8 +22,8 @@ const items = [
 updateQuality(items);
 */
 
-function decrementQuality(itemQuality) {
-  return itemQuality - 1;
+function decreaseQuality(currQuality, decAmount) {
+  return currQuality - decAmount;
 }
 
 function increaseQuality(currQuality, incAmount) {
@@ -81,10 +81,10 @@ function updateQuality(item) {
   else {
     // general items/standard items/normal items 
     if (item.quality > 0) {
-      item.quality = decrementQuality(item.quality);
+      item.quality = decreaseQuality(item.quality, 1);
     }
     if (item.sell_in < 0 && item.quality > 0) {
-      item.quality = decrementQuality(item.quality);
+      item.quality = decreaseQuality(item.quality, 1);
     }
   }
 }
