@@ -42,39 +42,51 @@ function decrementSellIn(itemSellIn) {
 }
 
 function updateQuality(item) {
-    // handles other special items: Aged Brie, Backstage passes, eventually conjured items
-    if (item.name.toLowerCase().includes('sulfuras')) {
-      return;
-    }
-    if (item.name.toLowerCase().includes('aged brie')) {
+  // updates the quality for all items
+  if (item.name.toLowerCase().includes('sulfuras')) {
+    // sulfuras "never has to be sold nor does it decrease in quality"
+    return;
+  }
+  if (item.name.toLowerCase().includes('aged brie')) {
+    /*
+     * aged brie increases in quality the older it gets
+     * it didn't explicitly say anywhere that aged brie increases in quality double after sell_in is 0, but this is the way it behaved in the original function
+     */
+    item.quality = incrementQuality(item.quality);
+    if (item.sell_in < 0) {
       item.quality = incrementQuality(item.quality);
-      if (item.sell_in < 0) {
-        item.quality = incrementQuality(item.quality);
-      }
     }
-    else if (item.name.toLowerCase().includes('backstage passes')) {
+  }
+  else if (item.name.toLowerCase().includes('backstage passes')) {
+    /* 
+    * "Backstage passes" increases in quality as its sell_in value decreases
+    * quality increases by 2 when there are 10 days or less
+    * and by 3 when there are 5 days or less
+    * but quality drops to 0 after the concert
+    */
+    item.quality = incrementQuality(item.quality);
+    if (item.sell_in < 11) {
       item.quality = incrementQuality(item.quality);
-      if (item.sell_in < 11) {
-        item.quality = incrementQuality(item.quality);
-      }
-      if (item.sell_in < 6) {
-        item.quality = incrementQuality(item.quality);
-      }
-      if (item.sell_in <= 0) {
-        item.quality = setQualityToZero();
-      }
     }
-    // conjured items will go here eventually
+    if (item.sell_in < 6) {
+      item.quality = incrementQuality(item.quality);
+    }
+    if (item.sell_in <= 0) {
+      item.quality = setQualityToZero();
+    }
+  }
+  // conjured items will go here eventually
 
+
+  else {
     // general items/standard items/normal items 
-    else {
-      if (item.quality > 0) {
-        item.quality = decrementQuality(item.quality);
-      }
-      if (item.sell_in < 0 && item.quality > 0) {
-        item.quality = decrementQuality(item.quality);
-      }
+    if (item.quality > 0) {
+      item.quality = decrementQuality(item.quality);
     }
+    if (item.sell_in < 0 && item.quality > 0) {
+      item.quality = decrementQuality(item.quality);
+    }
+  }
 }
 
 function updateSellIn(item) {
@@ -87,8 +99,9 @@ function updateSellIn(item) {
 }
 
 export function update(items) {
+  // this function updates the inventory each day
   items.forEach(item => {
       updateQuality(item);
       updateSellIn(item);
-  })
+  });
 }
