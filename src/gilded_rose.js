@@ -43,7 +43,10 @@ function decrementSellIn(itemSellIn) {
 
 function updateQuality(item) {
     // handles other special items: Aged Brie, Backstage passes, eventually conjured items
-    if (item.name === 'Aged Brie') {
+    if (item.name === 'Sulfuras, Hand of Ragnaros') {
+      return;
+    }
+    else if (item.name === 'Aged Brie') {
       item.quality = incrementQuality(item.quality);
       if (item.sell_in < 0) {
         item.quality = incrementQuality(item.quality);
@@ -75,23 +78,17 @@ function updateQuality(item) {
 }
 
 function updateSellIn(item) {
-  item.sell_in = decrementSellIn(item.sell_in);
+  if (item.name === 'Sulfuras, Hand of Ragnaros') {
+    return;
+  }
+  else {
+    item.sell_in = decrementSellIn(item.sell_in);
+  }
 }
 
 export function update(items) {
   items.forEach(item => {
-    // handles sulfuras only (by doing nothing)
-    if (item.name === 'Sulfuras, Hand of Ragnaros') {
-      return;
-    }
-
-
-    else {
-      // handles update quality for all non-sulfuras items
       updateQuality(item);
-
-      // handles decrease in sell in for all non-sulfuras items
       updateSellIn(item);
-    }
   })
 }
