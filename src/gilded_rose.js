@@ -42,27 +42,15 @@ function decreaseSellIn(currSellIn, decAmount = 1) {
 }
 
 function updateQuality(item) {
-  // updates the quality for all items
   if (item.name.toLowerCase().includes('sulfuras')) {
-    // sulfuras "never has to be sold nor does it decrease in quality"
     return;
   }
   if (item.name.toLowerCase().includes('aged brie')) {
-    /*
-     * aged brie increases in quality the older it gets
-     * it didn't explicitly say anywhere that aged brie increases in quality double after sell_in is 0, but this is the way it behaved in the original function
-     */
     item.sell_in < 0 ? 
       item.quality = increaseQuality(item.quality, 2) :
       item.quality = increaseQuality(item.quality);
   }
   else if (item.name.toLowerCase().includes('backstage passes')) {
-    /* 
-    * "Backstage passes" increases in quality as its sell_in value decreases
-    * quality increases by 2 when there are 10 days or less
-    * and by 3 when there are 5 days or less
-    * but quality drops to 0 after the concert
-    */
     if (item.sell_in <= 0) {
       item.quality = setQualityToZero();
     }
@@ -76,6 +64,7 @@ function updateQuality(item) {
       item.quality = increaseQuality(item.quality);
     }
   }
+
   // conjured items will go here eventually
 
 
@@ -100,7 +89,6 @@ function updateSellIn(item) {
 }
 
 export function update(items) {
-  // this function updates the inventory each day
   items.forEach(item => {
       updateQuality(item);
       updateSellIn(item);
