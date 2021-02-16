@@ -37,8 +37,8 @@ function setQualityToZero() {
   return 0;
 }
 
-function decrementSellIn(itemSellIn) {
-  return itemSellIn - 1;
+function decreaseSellIn(currSellIn, decAmount) {
+  return currSellIn - decAmount;
 }
 
 function updateQuality(item) {
@@ -94,7 +94,7 @@ function updateSellIn(item) {
     return;
   }
   else {
-    item.sell_in = decrementSellIn(item.sell_in);
+    item.sell_in = decreaseSellIn(item.sell_in, 1);
   }
 }
 
