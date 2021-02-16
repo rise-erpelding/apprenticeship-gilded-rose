@@ -52,10 +52,7 @@ function updateQuality(item) {
      * aged brie increases in quality the older it gets
      * it didn't explicitly say anywhere that aged brie increases in quality double after sell_in is 0, but this is the way it behaved in the original function
      */
-    item.quality = increaseQuality(item.quality);
-    if (item.sell_in < 0) {
-      item.quality = increaseQuality(item.quality);
-    }
+    item.sell_in < 0 ? item.quality = increaseQuality(item.quality, 2) : item.quality = increaseQuality(item.quality);
   }
   else if (item.name.toLowerCase().includes('backstage passes')) {
     /* 
