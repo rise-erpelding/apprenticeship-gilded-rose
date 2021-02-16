@@ -66,10 +66,10 @@ function updateQuality(item) {
     if (item.sell_in <= 0) {
       item.quality = setQualityToZero();
     }
-    else if (item.sell_in < 6) {
+    else if (item.sell_in <= 5) {
       item.quality = increaseQuality(item.quality, 3);
     }
-    else if (item.sell_in < 11) {
+    else if (item.sell_in <= 10) {
       item.quality = increaseQuality(item.quality, 2);
     }
     else {

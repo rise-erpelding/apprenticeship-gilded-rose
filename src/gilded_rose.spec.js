@@ -118,13 +118,13 @@ describe('updating of backstage passes', () => {
     expect(backstagePasses.quality).toBe(0);
   });
 
-  it('increases in quality by 3 if the sell_in is less than 6', () => {
+  it('increases in quality by 3 if the sell_in is less than or equal to 5', () => {
     backstagePasses.sell_in = 4;
     update([backstagePasses]);
     expect(backstagePasses.quality).toBe(13);
   });
 
-  it('increases in quality by 2 if the sell_in is less than 11', () => {
+  it('increases in quality by 2 if the sell_in is less than or equal to 10', () => {
     backstagePasses.sell_in = 8;
     update([backstagePasses]);
     expect(backstagePasses.quality).toBe(12);
