@@ -43,7 +43,7 @@ function decreaseSellIn(currSellIn, decAmount = 1) {
 
 function updateQuality(item) {
   if (item.name.toLowerCase().includes('sulfuras')) {
-    return;
+    return; // Question about return statements
   }
   if (item.name.toLowerCase().includes('aged brie')) {
     item.sell_in < 0 ? 
@@ -52,7 +52,7 @@ function updateQuality(item) {
   }
   else if (item.name.toLowerCase().includes('backstage passes')) {
     if (item.sell_in <= 0) {
-      item.quality = setQualityToZero();
+      item.quality = setQualityToZero(); // leave this or have decreaseQuality do the work?
     }
     else if (item.sell_in <= 5) {
       item.quality = increaseQuality(item.quality, 3);
@@ -61,7 +61,7 @@ function updateQuality(item) {
       item.quality = increaseQuality(item.quality, 2);
     }
     else {
-      item.quality = increaseQuality(item.quality);
+      item.quality = increaseQuality(item.quality); // is it confusing to pass in a number arg to the others but not this one?
     }
   }
 
