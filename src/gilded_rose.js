@@ -65,7 +65,9 @@ function updateQuality(item) {
     }
   }
 
-  // conjured items will go here eventually
+  else if (item.name.toLowerCase().includes('conjured')) {
+    item.quality = decreaseQuality(item.quality, 2);
+  }
 
 
   else {
