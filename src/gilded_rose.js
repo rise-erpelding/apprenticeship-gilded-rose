@@ -70,10 +70,13 @@ function updateQuality(item) {
 
   else {
     // general items/standard items/normal items 
-    if (item.quality > 0) {
-      item.quality = decreaseQuality(item.quality);
+    if (item.quality <= 0) {
+      return;
     }
-    if (item.sell_in < 0 && item.quality > 0) {
+    else if (item.sell_in < 0) {
+      item.quality = decreaseQuality(item.quality, 2);
+    }
+    else {
       item.quality = decreaseQuality(item.quality);
     }
   }
