@@ -52,7 +52,9 @@ function updateQuality(item) {
      * aged brie increases in quality the older it gets
      * it didn't explicitly say anywhere that aged brie increases in quality double after sell_in is 0, but this is the way it behaved in the original function
      */
-    item.sell_in < 0 ? item.quality = increaseQuality(item.quality, 2) : item.quality = increaseQuality(item.quality);
+    item.sell_in < 0 ? 
+      item.quality = increaseQuality(item.quality, 2) :
+      item.quality = increaseQuality(item.quality);
   }
   else if (item.name.toLowerCase().includes('backstage passes')) {
     /* 
@@ -61,15 +63,17 @@ function updateQuality(item) {
     * and by 3 when there are 5 days or less
     * but quality drops to 0 after the concert
     */
-    item.quality = increaseQuality(item.quality);
-    if (item.sell_in < 11) {
-      item.quality = increaseQuality(item.quality);
-    }
-    if (item.sell_in < 6) {
-      item.quality = increaseQuality(item.quality);
-    }
     if (item.sell_in <= 0) {
       item.quality = setQualityToZero();
+    }
+    else if (item.sell_in < 6) {
+      item.quality = increaseQuality(item.quality, 3);
+    }
+    else if (item.sell_in < 11) {
+      item.quality = increaseQuality(item.quality, 2);
+    }
+    else {
+      item.quality = increaseQuality(item.quality);
     }
   }
   // conjured items will go here eventually
