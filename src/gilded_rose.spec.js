@@ -78,7 +78,7 @@ describe('updating of sulfuras', () => {
   });
 });
 
-describe.skip('updating of conjured items', () => {
+describe('updating of conjured items', () => {
   const conjuredItem = new Item('Conjured Mana Cake', 3, 6);
 
   afterEach(() => {
