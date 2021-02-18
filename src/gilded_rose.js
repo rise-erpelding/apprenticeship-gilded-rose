@@ -45,40 +45,30 @@ function updateQuality(item) {
   if (item.name.toLowerCase().includes('sulfuras')) {
     return; // Question about return statements
   }
+
   if (item.name.toLowerCase().includes('aged brie')) {
     item.sell_in < 0 ? 
       item.quality = increaseQuality(item.quality, 2) :
       item.quality = increaseQuality(item.quality);
-  }
-  else if (item.name.toLowerCase().includes('backstage passes')) {
+  } else if (item.name.toLowerCase().includes('backstage passes')) {
     if (item.sell_in <= 0) {
       item.quality = setQualityToZero(); // leave this or have decreaseQuality do the work?
-    }
-    else if (item.sell_in <= 5) {
+    } else if (item.sell_in <= 5) {
       item.quality = increaseQuality(item.quality, 3);
-    }
-    else if (item.sell_in <= 10) {
+    } else if (item.sell_in <= 10) {
       item.quality = increaseQuality(item.quality, 2);
-    }
-    else {
+    } else {
       item.quality = increaseQuality(item.quality); // is it confusing to pass in a number arg to the others but not this one?
     }
-  }
-
-  else if (item.name.toLowerCase().includes('conjured')) {
+  } else if (item.name.toLowerCase().includes('conjured')) {
     item.quality = decreaseQuality(item.quality, 2);
-  }
-
-
-  else {
+  } else {
     // general items/standard items/normal items 
     if (item.quality <= 0) {
       return;
-    }
-    else if (item.sell_in < 0) {
+    } else if (item.sell_in < 0) {
       item.quality = decreaseQuality(item.quality, 2);
-    }
-    else {
+    } else {
       item.quality = decreaseQuality(item.quality);
     }
   }
@@ -95,7 +85,7 @@ function updateSellIn(item) {
 
 export function update(items) {
   items.forEach(item => {
-      updateQuality(item);
+      updateQuality(item); //item.updateQuality
       updateSellIn(item);
   });
 }
