@@ -43,37 +43,35 @@ function decreaseSellIn(currSellIn, decAmount = 1) {
 
 function produceUpdatedItem(item) {
   if (item.name.toLowerCase().includes('sulfuras')) {
-    return; // Question about return statements
+    return item; // Question about return statements
   }
 
   if (item.name.toLowerCase().includes('aged brie')) {
-    item.sell_in < 0 ? 
-      item.quality = increaseQuality(item.quality, 2) :
-      item.quality = increaseQuality(item.quality);
+    return item.sell_in < 0 ? 
+      new Item(item.name,  decreaseSellIn(item.sell_in), increaseQuality(item.quality, 2)) :
+      new Item(item.name,  decreaseSellIn(item.sell_in), increaseQuality(item.quality));
   } else if (item.name.toLowerCase().includes('backstage passes')) {
     if (item.sell_in <= 0) {
-      item.quality = setQualityToZero(); // leave this or have decreaseQuality do the work?
+      return new Item(item.name, decreaseSellIn(item.sell_in), setQualityToZero());
     } else if (item.sell_in <= 5) {
-      item.quality = increaseQuality(item.quality, 3);
+      return new Item(item.name, decreaseSellIn(item.sell_in), increaseQuality(item.quality, 3));
     } else if (item.sell_in <= 10) {
-      item.quality = increaseQuality(item.quality, 2);
+      return new Item(item.name, decreaseSellIn(item.sell_in), increaseQuality(item.quality, 2));
     } else {
-      item.quality = increaseQuality(item.quality); // is it confusing to pass in a number arg to the others but not this one?
+      return new Item(item.name, decreaseSellIn(item.sell_in), increaseQuality(item.quality));
     }
   } else if (item.name.toLowerCase().includes('conjured')) {
-    item.quality = decreaseQuality(item.quality, 2);
+    return new Item(item.name, decreaseSellIn(item.sell_in), decreaseQuality(item.quality, 2));
   } else {
     // general items/standard items/normal items 
     if (item.quality <= 0) {
-      return;
+      return item;
     } else if (item.sell_in < 0) {
-      item.quality = decreaseQuality(item.quality, 2);
+      return new Item(item.name, decreaseSellIn(item.sell_in), decreaseQuality(item.quality, 2));
     } else {
-      item.quality = decreaseQuality(item.quality);
+      return new Item(item.name, decreaseSellIn(item.sell_in), decreaseQuality(item.quality));
     }
   }
-  // awkwardly sticking this right here for now
-  item.sell_in = decreaseSellIn(item.sell_in);
 }
 
 // function updateSellIn(item) {
@@ -88,15 +86,7 @@ function produceUpdatedItem(item) {
 export function update(items) {
   const updatedItems = [];
   items.forEach(item => {
-      // put the item through functions change quality/sellin
-
-      // updatedItems.push(produceUpdatedItem(item));
-
-
-      produceUpdatedItem(item);
-      // updateQuality(item); //item.updateQuality
-      // updateSellIn(item);
-      
+      updatedItems.push(produceUpdatedItem(item));
   });
   return updatedItems;
 }
