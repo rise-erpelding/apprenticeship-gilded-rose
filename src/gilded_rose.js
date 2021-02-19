@@ -41,7 +41,7 @@ function decreaseSellIn(currSellIn, decAmount = 1) {
   return currSellIn - decAmount;
 }
 
-function updateQuality(item) {
+function produceUpdatedItem(item) {
   if (item.name.toLowerCase().includes('sulfuras')) {
     return; // Question about return statements
   }
@@ -72,20 +72,31 @@ function updateQuality(item) {
       item.quality = decreaseQuality(item.quality);
     }
   }
+  // awkwardly sticking this right here for now
+  item.sell_in = decreaseSellIn(item.sell_in);
 }
 
-function updateSellIn(item) {
-  if (item.name.toLowerCase().includes('sulfuras')) {
-    return;
-  }
-  else {
-    item.sell_in = decreaseSellIn(item.sell_in);
-  }
-}
+// function updateSellIn(item) {
+//   if (item.name.toLowerCase().includes('sulfuras')) {
+//     return;
+//   }
+//   else {
+//     item.sell_in = decreaseSellIn(item.sell_in);
+//   }
+// }
 
 export function update(items) {
+  const updatedItems = [];
   items.forEach(item => {
-      updateQuality(item); //item.updateQuality
-      updateSellIn(item);
+      // put the item through functions change quality/sellin
+
+      // updatedItems.push(produceUpdatedItem(item));
+
+
+      produceUpdatedItem(item);
+      // updateQuality(item); //item.updateQuality
+      // updateSellIn(item);
+      
   });
+  return updatedItems;
 }
