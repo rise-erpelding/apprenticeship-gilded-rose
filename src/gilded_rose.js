@@ -41,16 +41,31 @@ function decreaseSellIn(currSellIn, decAmount = 1) {
   return currSellIn - decAmount;
 }
 
-function produceUpdatedItem(item) {
-  if (item.name.toLowerCase().includes('sulfuras')) {
-    return item; // Question about return statements
-  }
+// checks item.name against the category of item
+function matchItemName(name, match) {
+  return name.toLowerCase().includes(match);
+}
 
-  if (item.name.toLowerCase().includes('aged brie')) {
+function handleSulfuras(item) {
+  if (matchItemName(item.name, 'sulfuras')) {
+    return item;
+  } else {
+    return;
+  }
+}
+
+function handleAgedBrie(item) {
+  if (matchItemName(item.name, 'aged brie')) {
     return item.sell_in < 0 ? 
-      new Item(item.name,  decreaseSellIn(item.sell_in), increaseQuality(item.quality, 2)) :
-      new Item(item.name,  decreaseSellIn(item.sell_in), increaseQuality(item.quality));
-  } else if (item.name.toLowerCase().includes('backstage passes')) {
+    new Item(item.name,  decreaseSellIn(item.sell_in), increaseQuality(item.quality, 2)) :
+    new Item(item.name,  decreaseSellIn(item.sell_in), increaseQuality(item.quality));
+  } else {
+    return;
+  }
+}
+
+function handleBackstagePasses(item) {
+  if (matchItemName(item.name, 'backstage passes')) {
     if (item.sell_in <= 0) {
       return new Item(item.name, decreaseSellIn(item.sell_in), setQualityToZero());
     } else if (item.sell_in <= 5) {
@@ -60,28 +75,53 @@ function produceUpdatedItem(item) {
     } else {
       return new Item(item.name, decreaseSellIn(item.sell_in), increaseQuality(item.quality));
     }
-  } else if (item.name.toLowerCase().includes('conjured')) {
-    return new Item(item.name, decreaseSellIn(item.sell_in), decreaseQuality(item.quality, 2));
   } else {
-    // general items/standard items/normal items 
-    if (item.quality <= 0) {
-      return item;
-    } else if (item.sell_in < 0) {
-      return new Item(item.name, decreaseSellIn(item.sell_in), decreaseQuality(item.quality, 2));
-    } else {
-      return new Item(item.name, decreaseSellIn(item.sell_in), decreaseQuality(item.quality));
-    }
+    return;
   }
 }
 
-// function updateSellIn(item) {
-//   if (item.name.toLowerCase().includes('sulfuras')) {
-//     return;
-//   }
-//   else {
-//     item.sell_in = decreaseSellIn(item.sell_in);
-//   }
-// }
+function handleConjuredItems(item) {
+  if (matchItemName(item.name, 'conjured')) {
+    return item.sell_in < 0 ? 
+      new Item(item.name, decreaseSellIn(item.sell_in), decreaseQuality(item.quality, 4)) :
+      new Item(item.name, decreaseSellIn(item.sell_in), decreaseQuality(item.quality, 2));
+  } else {
+    return;
+  }
+}
+
+function handleNormalItems(item) {
+  if (item.quality <= 0) {
+    return new Item(item.name, decreaseSellIn(item.sell_in), setQualityToZero());
+  } else if (item.sell_in < 0) {
+    return new Item(item.name, decreaseSellIn(item.sell_in), decreaseQuality(item.quality, 2));
+  } else {
+    return new Item(item.name, decreaseSellIn(item.sell_in), decreaseQuality(item.quality));
+  }
+}
+
+function produceUpdatedItem(item) {
+
+  let updatedItem;
+  const specialItemActions = [handleSulfuras, handleAgedBrie, handleBackstagePasses, handleConjuredItems];
+  specialItemActions.forEach(action => {
+    // runs through each of the functions for special items first
+    // the functions for special items will return undefined if those rules don't apply to the item
+    // update the value of updatedItem if running the action returns an object (aka if it doesn't return undefined)
+    if (typeof action(item) === 'object') {
+      updatedItem = action(item);
+      return updatedItem;
+    }
+  });
+
+  // if updatedItem is still undefined (aka if it's not an object) then it's a normal item, not a special item
+  // run the normal item function to apply normal item rules
+  if (typeof updatedItem !== 'object') {
+    updatedItem = handleNormalItems(item);
+  }
+  // now we've either applied rules for a special item or a normal item so updatedItem should be defined, so return that value to update()
+  return updatedItem;
+}
 
 export function update(items) {
   const updatedItems = [];

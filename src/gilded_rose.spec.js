@@ -73,7 +73,7 @@ describe('updating of conjured items', () => {
   });
 
   // logic not implemented but this is how it should be
-  it.skip('decreases quality twice as fast after sell in is 0', () => {
+  it('decreases quality twice as fast after sell in is 0', () => {
     expect(updatedConjuredRabbit.quality).toBe(4);
   });
 });
